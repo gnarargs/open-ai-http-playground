@@ -6,10 +6,13 @@ HTTP examples for various OpenAI APIs.
 
 [OpenAI Responses API](https://platform.openai.com/docs/guides/structured-outputs?api-mode=responses)
 
-See [responses.http](responses.http).
+See [responses.http](responses-api.http).
 
-TODO:
-- Add example that uses `instructions` to pass role in one request but does not follow through on next request when using previous reponses id.
+Examples:
+- Create Response
+- Passing `previous_response_id` instead of passing entire context
+- Get Response
+- Using built-in web search tool
 
 ## Tools/Function Calling
 [OpenAI Function Calling](https://platform.openai.com/docs/guides/function-calling?api-mode=responses)
