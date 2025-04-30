@@ -1,0 +1,109 @@
+### Response with JSON Schema
+
+POST https://api.openai.com/v1/responses
+Authorization: Bearer {{OPEN_AI_API_KEY}}
+Content-Type: application/json
+
+{
+  "model": "gpt-4.1-mini",
+  "input": "Dylan and Tyson are going to Shamane's for breakfast tomorrow.",
+  "text": {
+    "format": {
+      "type": "json_schema",
+      "name": "event_schema",
+      "strict": true,
+      "description": "Information about an event",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location of the event"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of the event"
+          },
+          "attendees": {
+            "type": "array",
+            "description": "Attendees of the event",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the attendee"
+                }
+              },
+              "additionalProperties": false,
+              "required": ["name"]
+            }
+          }
+        },
+        "required": [
+          "location",
+          "date",
+          "attendees"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}
+
+
+### Unparseable prompt
+
+POST https://api.openai.com/v1/responses
+Authorization: Bearer {{OPEN_AI_API_KEY}}
+Content-Type: application/json
+
+{
+  "model": "gpt-4.1-mini",
+  "input": "Can you guess what number I am thinking about?",
+  "instructions": "If you can't parse the request into the given JSON Schema, responsd with \"Opps. Not sure about that.\"",
+  "text": {
+    "format": {
+      "type": "json_schema",
+      "name": "event_schema",
+      "strict": true,
+      "description": "Information about an event",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location of the event"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of the event"
+          },
+          "attendees": {
+            "type": "array",
+            "description": "Attendees of the event",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the attendee"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ]
+            }
+          }
+        },
+        "required": [
+          "location",
+          "date",
+          "attendees"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}
