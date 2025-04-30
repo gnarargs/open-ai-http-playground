@@ -1,4 +1,4 @@
-# LLM Playground
+# OpenAI HTTP Playground
 
 HTTP examples for various OpenAI APIs.
 
