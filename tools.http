@@ -175,3 +175,125 @@ Content-Type: application/json
   ]
 }
 
+### Multiple tool calls
+
+POST https://api.openai.com/v1/responses
+Authorization: Bearer {{OPEN_AI_API_KEY}}
+Content-Type: application/json
+
+{
+  "model": "gpt-4.1-mini",
+  "input": "I am traveling to Boulder, CO tomorrow. What should I do while I am there? What clothing should I pack for those activities?",
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
+  "tools": [
+    {
+      "type": "function",
+      "name": "get_weather_forecast",
+      "description": "Get tomorrow's weather forecast.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location to get the weather forecast for."
+          }
+        },
+        "required": [
+          "location"
+        ]
+      }
+    },
+    {
+      "type": "function",
+      "name": "get_activities",
+      "description": "Get upcoming activities for a location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location to get activities for"
+          }
+        },
+        "required": ["location"]
+      }
+    }
+  ]
+}
+
+> {%
+    const functionCall = response.body.output[0];
+    client.global.set('multi_response_id', response.body.id);
+
+    const weather_call = response.body.output.find((tool_call) => tool_call.name === 'get_weather_forecast')
+
+    client.global.set('multi_weather_function_call_id', weather_call.id);
+    client.global.set('multi_weather_call_id', weather_call.call_id);
+    client.global.set('multi_weather_function_name', weather_call.name);
+    client.global.set('multi_weather_arguments', JSON.stringify(weather_call.arguments));
+
+    const activity_call = response.body.output.find((tool_call) => tool_call.name === 'get_activities')
+
+    client.global.set('multi_activity_function_call_id', activity_call.id);
+    client.global.set('multi_activity_call_id', activity_call.call_id);
+    client.global.set('multi_activity_function_name', activity_call.name);
+    client.global.set('multi_activity_arguments', JSON.stringify(activity_call.arguments));
+%}
+
+### Multiple tool calls response
+
+POST https://api.openai.com/v1/responses
+Authorization: Bearer {{OPEN_AI_API_KEY}}
+Content-Type: application/json
+
+{
+  "previous_response_id": "{{multi_response_id}}",
+  "model": "gpt-4.1-mini",
+  "input": [
+    {
+      "type": "function_call_output",
+      "call_id": "{{multi_weather_call_id}}",
+      "output": "{\"high\": 32, \"low\": 12}"
+    },
+    {
+      "type": "function_call_output",
+      "call_id": "{{multi_activity_call_id}}",
+      "output": "[\"Hiking\", \"Skiing\"]"
+    }
+  ],
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
+  "tools": [
+    {
+      "type": "function",
+      "name": "get_weather_forecast",
+      "description": "Get tomorrow's weather forecast.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location to get the weather forecast for."
+          }
+        },
+        "required": [
+          "location"
+        ]
+      }
+    },
+    {
+      "type": "function",
+      "name": "get_activities",
+      "description": "Get upcoming activities for a location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location to get activities for"
+          }
+        },
+        "required": ["location"]
+      }
+    }
+  ]
+}
