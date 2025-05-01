@@ -6,7 +6,7 @@ Content-Type: application/json
 {
   "model": "gpt-4.1-mini",
   "input": "I am traveling to Boulder, CO tomorrow. What clothing should I pack?",
-  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data."
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast for the date of travel, do not provide an answer based on historical data."
 }
 
 ### Pass weather forecast tool
@@ -18,7 +18,7 @@ Content-Type: application/json
 {
   "model": "gpt-4.1-mini",
   "input": "I am traveling to Boulder, CO tomorrow. What clothing should I pack?",
-  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast for the date of travel, do not provide an answer based on historical data.",
   "tools": [
     {
       "type": "function",
@@ -77,7 +77,7 @@ Content-Type: application/json
       "output": "{\"high\": 32, \"low\": 12}"
     }
   ],
-  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast for the date of travel, do not provide an answer based on historical data.",
   "tools": [
     {
       "type": "function",
@@ -115,7 +115,7 @@ Content-Type: application/json
       "output": "{\"high\": 32, \"low\": 12}"
     }
   ],
-  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast for the date of travel, do not provide an answer based on historical data.",
   "tools": [
     {
       "type": "function",
@@ -150,7 +150,7 @@ Content-Type: application/json
 {
   "model": "gpt-4.1-mini",
   "input": "I am traveling to Boulder, CO tomorrow. What should I do while I am there? What clothing should I pack for those activities?",
-  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
+  "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast for the date of travel, do not provide an answer based on historical data.",
   "tools": [
     {
       "type": "function",
