@@ -27,7 +27,7 @@ See [structured_outputs.http](structured_outputs.http).
 #### Notes
 
 - Structured Outputs use [JSON Schema](https://json-schema.org/overview/what-is-jsonschema) to define desired output structure
-- Currently all fields must be required and `additionalPropeties` must be false
+- Currently, all fields must be marked as required and `additionalPropeties` must be false
 
 
 ## Tools/Function Calling
@@ -35,4 +35,9 @@ See [structured_outputs.http](structured_outputs.http).
 
 See [tools.http](tools.http).
 
+#### Examples
 
+- Send request with no tool call, see that LLM can't respond
+- Send same request with tool call, see that LLM responds with tool call
+- Send followup request that includes the output from calling the requested tool
+- Multiple tool calls in a single response
