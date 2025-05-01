@@ -6,14 +6,45 @@ Content-Type: application/json
 
 {
   "model": "gpt-4.1-mini",
-  "input": "What are some popular ways to cook chicken thighs?"
+  "input": "I am traveling to Boulder, CO tomorrow. What clothing should I pack?"
 }
 
 > {%
     client.global.set('response_id', response.body.id);
 %}
 
-### Use previous_response_id instead of passing entire context
+### Get Response
+
+GET https://api.openai.com/v1/responses/{{response_id}}
+Authorization: Bearer {{OPEN_AI_API_KEY}}
+Content-Type: application/json
+
+
+### Send followup by passing entire context for conversation
+
+POST https://api.openai.com/v1/responses
+Authorization: Bearer {{OPEN_AI_API_KEY}}
+Content-Type: application/json
+
+{
+  "model": "gpt-4.1-mini",
+  "input": [
+    {
+      "role": "user",
+      "content": "I am traveling to Boulder, CO tomorrow. What clothing should I pack?"
+    },
+    {
+      "role": "assistant",
+      "content": "I don't have access to real-time event data or weather forecasts. However, Boulder, CO generally offers plenty of enjoyable activities that you can consider for a weekend trip."
+    },
+    {
+      "role": "user",
+      "content": "Actually I am going to go to Reykjavík instead."
+    }
+  ]
+}
+
+### Use previous response ID instead of passing entire context
 
 POST https://api.openai.com/v1/responses
 Authorization: Bearer {{OPEN_AI_API_KEY}}
@@ -22,15 +53,8 @@ Content-Type: application/json
 {
   "previous_response_id": "{{response_id}}",
   "model": "gpt-4.1-mini",
-  "input": "I only have a grill."
+  "input": "Actually I am going to go to Reykjavík instead."
 }
-
-
-### Get Response
-
-GET https://api.openai.com/v1/responses/{{response_id}}
-Authorization: Bearer {{OPEN_AI_API_KEY}}
-Content-Type: application/json
 
 ### Use web search tool
 
@@ -40,28 +64,9 @@ Content-Type: application/json
 
 {
   "model": "gpt-4.1-mini",
-  "input": "I am traveling to Boulder, CO tomorrow. Are there any events happening this next weekend?",
+  "input": "What are some things to do in Boulder, CO this weekend?",
   "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
   "tools": [
-    {
-      "type": "web_search_preview"
-    },
-    {
-      "type": "function",
-      "name": "get_weather_forecast",
-      "description": "Get tomorrow's weather forecast.",
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "location": {
-            "type": "string",
-            "description": "Location to get the weather forecast for."
-          }
-        },
-        "required": [
-          "location"
-        ]
-      }
-    }
+
   ]
 }
