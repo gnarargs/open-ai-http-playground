@@ -41,3 +41,9 @@ See [tools.http](tools.http).
 - Send same request with tool call, see that LLM responds with tool call
 - Send followup request that includes the output from calling the requested tool
 - Multiple tool calls in a single response
+
+## Todo
+
+- Add configuration to web search tool
+- Add example code interpreter tool http://platform.openai.com/docs/guides/tools-code-interpreter
+- Add example for computer use tool https://platform.openai.com/docs/guides/tools-computer-use
