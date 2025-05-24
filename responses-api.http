@@ -66,7 +66,5 @@ Content-Type: application/json
   "model": "gpt-4.1-mini",
   "input": "What are some things to do in Boulder, CO this weekend?",
   "instructions": "Suggest clothing to pack for an upcoming trip. If you do not know the specifics for the weather forecast, do not provide an answer based on historical data.",
-  "tools": [
-
-  ]
+  "tools": [{"type": "web_search_preview"}]
 }
